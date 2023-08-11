@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <section class="content-main">
+        {% if messages %}
+        <ul class="alert {{ message.tags }}" role="alert">
+            {% for message in messages %}
+            <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        <div class="row">
+            
+            <!-- <div class="col-lg-6">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h4>Search</h4>
+                    </div>
+                    <div class="card-body">
+                        <form>
+                            <div class="mb-4">
+                                <label for="product_name" class="form-label">Product title</label>
+                                <input type="text" placeholder="Type here" class="form-control" id="product_name" />
+                            </div> -->
+                            <!-- <div class="mb-4">
+                                <label class="form-label">Full description</label>
+                                <textarea placeholder="Type here" class="form-control" rows="4"></textarea>
+                            </div> -->
+                            
+                            
+                        <!-- </form>
+                    </div>
+                </div> -->
+                
+                <!-- card end// -->
+            <!-- </div> -->
+            <div class="col-lg-3">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h4>Predict Herb</h4>
+                    </div>
+                    <form action="" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="card-body">
+                            <div class="input-upload">
+                                <img src="{% static 'assets/imgs/theme/upload.svg' %}" alt="" />
+                                <input
+                                    class="form-control custom-file-upload"
+                                    type="file"
+                                    accept="image"
+                                    name="image"
+                                    id="file" type="file" />
+                            </div>
+
+                            <button class="btn btn-primary" style="margin-top: 20px;" type="submit" id="submitBtn">
+                                Predict Herb
+                            </button>
+
+                              <div style="margin-top: 20px;" class="status">
+                                <p id="message">{{ message }}</p>
+                              </div>
+
+                              
+                        </div>
+                    </form>
+                </div>
+                <!-- card end// -->
+            </div>
+
+            <div class="col-md-6">
+                <div class="wrapper">
+                    <img
+                      src="{% if image_url %}{{ image_url }}{% else %}{% static 'assets/imgs/theme/upload.svg' %}{% endif %}"
+                      alt="Compressed Image"
+                      width="400px"
+                    />
+              
+                    <div class="info_container">
+                      <ul>
+                        <li>Name: <span class="name">{{ image.name }}</span></li>
+
+                        <li>Prediction: <span class="type">{{ prediction }}</span></li>
+
+                        <li>Similarity: <span class="type">{{ similarity|floatformat:-2 }}%</span></li>
+                      </ul>
+                    </div>
+                  </div>
+            </div>
+        </div>
+    </section>
+   
+    <section class="content-main">
+        
+        <!-- card-header end// -->
+        <div class="row">
+            {% if herbs %}
+            <h1 style="text-align: center">You might like it</h1>
+            {% endif %}
+            {% for herb in herbs %}
+            <div class="col-xl-3 col-lg-4 col-md-6">
+                <div class="card card-product-grid">
+                    <a href="{% url 'detail' herb.id %}" class="img-wrap"> <img src="{{ herb.image.url }}" alt="Product" /> </a>
+                    <div class="info-wrap">
+                        
+                        <a href="{% url 'detail' herb.id %}" class="title">{{ herb.title }}</a>
+                        <div class="price mt-1">({{ herb.num_views }}) views</div>
+                        <!-- price-wrap.// -->
+                    </div>
+                </div>
+                <!-- card-product  end// -->
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock content %}

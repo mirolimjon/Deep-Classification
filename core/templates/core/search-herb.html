@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <section class="content-main">
+       
+        <div class="row">
+            {% if herbs.count > 0  %}
+                {% for herb in herbs %}
+                <div class="col-xl-3 col-lg-4 col-md-6">
+                    <div class="card card-product-grid">
+                        <a href="{% url 'detail' herb.id %}" class="img-wrap"> <img src="{{ herb.image.url }}" alt="Product" /> </a>
+                        <div class="info-wrap">
+                            
+                            <a href="{% url 'detail' herb.id %}" class="title">{{ herb.title }}</a>
+                            <div class="price mt-1">({{ herb.num_views }}) views</div>
+                            <!-- price-wrap.// -->
+                        </div>
+                    </div>
+                    <!-- card-product  end// -->
+                </div>
+                {% endfor %}
+            {% else %}
+
+            <h2>The information for your request is not available at this time. Please wait a while. Or enter requests for "Lily", "DangSheng".</h2>
+            
+            {% endif %}
+        </div>
+    </section>
+{% endblock content %}

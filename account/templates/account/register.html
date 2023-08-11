@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <body>
+        <main>
+            <section class="content-main mt-80 mb-80">
+                              
+                {% if messages %}
+                <ul class="messages alert" role="alert">
+                    {% for message in messages %}
+                    <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                
+                <div class="card mx-auto card-login">
+                    <div class="card-body">
+
+                        <h4 class="card-title mb-4">Create an Account</h4>
+                        <form method="POST">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label class="form-label">Username</label>
+                                <input class="form-control" placeholder="Your username" name="username" type="text" />
+                            </div>
+                           
+                            <!-- form-group// -->
+                            <div class="mb-3">
+                                <label class="form-label">Create password</label>
+                                <input class="form-control" placeholder="Password" name="password" type="password" />
+                            </div>
+                            <!-- form-group// -->
+                            <div class="mb-3">
+                                <label class="form-label">Confirm password</label>
+                                <input class="form-control" placeholder="Password" name="password2" type="password" />
+                            </div>
+                            <!-- form-group// -->
+                            <div class="mb-3">
+                                <p class="small text-center text-muted">By signing up, you confirm that you’ve read and accepted our User Notice and Privacy Policy.</p>
+                            </div>
+                            <!-- form-group  .// -->
+                            <div class="mb-4">
+                                <button type="submit" class="btn btn-primary w-100">Login</button>
+                            </div>
+                            <!-- form-group// -->
+                        </form>
+                        
+                        <p class="text-center mb-2">Already have an account? <a href="{% url 'login' %}">Sign in now</a></p>
+                    </div>
+                </div>
+            </section>
+            <footer class="main-footer text-center">
+                <p class="font-xs">
+                    <script>
+                        document.write(new Date().getFullYear());
+                    </script>
+                    &copy; Nest - HTML Ecommerce Template .
+                </p>
+                <p class="font-xs mb-30">All rights reserved</p>
+            </footer>
+        </main>
+        <script src="{% static 'assets/js/vendors/jquery-3.6.0.min.js' %}"></script>
+        <script src="{% static 'assets/js/vendors/bootstrap.bundle.min.js' %}"></script>
+        <script src="{% static 'assets/js/vendors/jquery.fullscreen.min.js' %}"></script>
+        <!-- Main Script -->
+        <script src="{% static 'assets/js/main.js' %}" type="text/javascript"></script>
+        <script src="{% static 'assets/js/vendors/jquery-3.6.0.min.js' %}"></script>
+        <script src="{% static 'assets/js/vendors/bootstrap.bundle.min.js' %}"></script>
+        <script src="{% static 'assets/js/vendors/select2.min.js' %}"></script>
+        <script src="{% static 'assets/js/vendors/perfect-scrollbar.js' %}"></script>
+        <script src="{% static 'assets/js/vendors/jquery.fullscreen.min.js' %}"></script>
+        <!-- Main Script -->
+        <script src="{% static 'assets/js/main.js' %}" type="text/javascript"></script>
+    </body>
+{% endblock content %}

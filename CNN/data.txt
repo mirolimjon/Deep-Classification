@@ -1,0 +1,12 @@
+images-folder/
+		name/
+			image1.jpg
+			image2.jpg
+		name2/
+			image3.jpg
+			image4.jpg
+		name3/
+			.......
+		
+
+		...../

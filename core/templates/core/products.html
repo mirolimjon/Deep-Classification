@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <section class="content-main">
+       
+        <!-- card-header end// -->
+        <div class="row">
+
+            {% for herb in herbs %}
+            <div class="col-xl-3 col-lg-4 col-md-6">
+                <div class="card card-product-grid">
+                    <a href="{% url 'detail' herb.id %}" class="img-wrap"> <img src="{{ herb.image.url }}" alt="Product" /> </a>
+                    <div class="info-wrap">
+                        
+                        <a href="{% url 'detail' herb.id %}" class="title">{{ herb.title }}</a>
+                        <div class="price mt-1">({{ herb.num_views }}) views</div>
+                        <!-- price-wrap.// -->
+                    </div>
+                </div>
+                <!-- card-product  end// -->
+            </div>
+            {% endfor %}
+        </div>
+        <!-- row.// -->
+        <!-- <div class="pagination-area mt-15 mb-50">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-start">
+                    <li class="page-item active"><a class="page-link" href="#">01</a></li>
+                    <li class="page-item"><a class="page-link" href="#">02</a></li>
+                    <li class="page-item"><a class="page-link" href="#">03</a></li>
+                    <li class="page-item"><a class="page-link dot" href="#">...</a></li>
+                    <li class="page-item"><a class="page-link" href="#">16</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#"><i class="material-icons md-chevron_right"></i></a>
+                    </li>
+                </ul>
+            </nav>
+        </div> -->
+    </section>
+{% endblock content %}

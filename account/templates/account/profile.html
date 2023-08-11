@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'assets_front/css/main.css' %}" />
+{% endblock style %}
+
+{% block content %}
+
+    
+    <main class="main pages">
+        <div class="page-header breadcrumb-wrap">
+            <div class="container">
+                <div class="breadcrumb">
+                    <a href="{% url 'home' %}" rel="nofollow"><i class="fi-rs-home mr-5"></i>Home</a>
+                    <span></span> Pages <span></span> My Account
+                </div>
+            </div>
+        </div>
+        <div class="page-content pt-150 pb-150">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-10 m-auto">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="dashboard-menu">
+                                    <ul class="nav flex-column" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" id="dashboard-tab" data-bs-toggle="tab" href="#dashboard" role="tab" aria-controls="dashboard" aria-selected="false">Dashboard</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="orders-tab" data-bs-toggle="tab" href="#orders" role="tab" aria-controls="orders" aria-selected="false">History</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="track-orders-tab" data-bs-toggle="tab" href="#track-orders" role="tab" aria-controls="track-orders" aria-selected="false">Reviews</a>
+                                        </li>
+                                        
+                                        
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{% url 'logout' %}"><i class="fi-rs-sign-out mr-10"></i>Logout</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="tab-content account dashboard-content pl-50">
+                                    <div class="tab-pane fade active show" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h3 class="mb-0">Hello {{ request.user }}!</h3>
+                                            </div>
+                                            <div class="card-body">
+                                                <p>
+                                                    From your account dashboard. you can easily check &amp; view your <a href="#">history</a> and view your <a href="#">reviews.</a>
+                                                </p>
+                                            </div>
+                                        </div>  
+                                    </div>
+                                    <div class="tab-pane fade" id="orders" role="tabpanel" aria-labelledby="orders-tab">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h3 class="mb-0">Your History</h3>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="table-responsive">
+                                                    <table class="table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Id</th>
+                                                                <th>Date</th>
+                                                                <th>Herb</th>
+                                                                <th>Total Views</th>
+                                                                <th>Total Review</th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {% for hist in history %}
+                                                            <tr>
+                                                                <td>#{{hist.id}}</td>
+                                                                <td>{{ hist.created }}</td>
+                                                                <td>{{ hist.herb.title }}</td>
+                                                                <td>{{ hist.herb.num_views }}</td>
+                                                                <td>{{ hist.herb.review_set.all.count }}</td>
+                                                                <td><a href="{% url 'detail' hist.herb.id %}">View</a></td>
+                                                            </tr>
+                                                            {% endfor %}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="track-orders" role="tabpanel" aria-labelledby="track-orders-tab">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h3 class="mb-0">Your Reviews</h3>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="table-responsive">
+                                                    <table class="table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>ID</th>
+                                                                <th>Date</th>
+                                                                <th>Herb</th>
+                                                                <th>Rating</th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {% for rev in review %}
+                                                            <tr>
+                                                                <td>#{{ rev.id }}</td>
+                                                                <td>{{ rev.created }}</td>
+                                                                <td>{{ rev.herb.title }}</td>
+                                                                <td>
+                                                                    {% for star in rev.rating|ljust:rev.rating %}
+                                                                        <i class="fa-solid fa-star text-warning"></i>
+                                                                    {% endfor %}
+                                                                </td>
+                                                                <td><a href="{% url 'detail' rev.herb.id %}">View Herb</a></td>
+                                                            </tr>
+                                                            {% endfor %}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock content %}
+{% block script %}
+<!-- Vendor JS-->
+    <script src="{% static 'assets_front/js/vendor/modernizr-3.6.0.min.js' %}"></script>
+    <script src="{% static 'assets_front/js/vendor/jquery-3.6.0.min.js' %}"></script>
+    <script src="{% static 'assets_front/js/vendor/jquery-migrate-3.3.0.min.js' %}"></script>
+    <script src="{% static 'assets_front/js/vendor/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'assets_front/js/plugins/slick.js' %}"></script>
+    <script src="{% static 'assets_front/js/plugins/jquery.syotimer.min.js' %}"></script>
+    <script src="{% static 'assets_front/js/plugins/wow.js' %}"></script>
+    <script src="{% static 'assets_front/js/plugins/perfect-scrollbar.js' %}"></script>
+    <script src="{% static 'assets_front/js/plugins/magnific-popup.js' %}"></script>
+    <script src="{% static 'assets_front/js/plugins/select2.min.js' %}"></script>
+    <script src="{% static 'assets_front/js/plugins/waypoints.js' %}"></script>
+    <script src="{% static 'assets_front/js/plugins/counterup.js' %}"></script>
+    <script src="{% static 'assets_front/js/plugins/jquery.countdown.min.js' %}"></script>
+    <script src="{% static 'assets_front/js/plugins/images-loaded.js' %}"></script>
+    <script src="{% static 'assets_front/js/plugins/isotope.js' %}"></script>
+    <script src="{% static 'assets_front/js/plugins/scrollup.js' %}"></script>
+    <script src="{% static 'assets_front/js/plugins/jquery.vticker-min.js' %}"></script>
+    <script src="{% static 'assets_front/js/plugins/jquery.theia.sticky.js' %}"></script>
+    <script src="{% static 'assets_front/js/plugins/jquery.elevatezoom.js' %}"></script>
+    <!-- Template  JS -->
+    <script src="{% static 'assets_front/js/main.js' %}"></script>
+    <script src="{% static 'assets_front/js/shop.js' %}"></script>
+    <script src="{% static 'assets/js/vendors/jquery-3.6.0.min.js' %}"></script>
+    <script src="{% static 'assets/js/vendors/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'assets/js/vendors/select2.min.js' %}"></script>
+    <script src="{% static 'assets/js/vendors/perfect-scrollbar.js' %}"></script>
+    <script src="{% static 'assets/js/vendors/jquery.fullscreen.min.js' %}"></script>
+    <!-- Main Script -->
+    <script src="{% static 'assets/js/main.js' %}" type="text/javascript"></script>
+{% endblock script %}
